@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ YEREPHACK v4.2 - ULTRA STANDKNIFE CHEAT HUB ⚡</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Press+Start+2P&family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --neon-pink: #ff007f;
+            --neon-cyan: #00f3ff;
+            --neon-green: #00ff66;
+            --neon-yellow: #ffee00;
+            --neon-purple: #b000ff;
+        }
+
+        body {
+            background-color: #030308;
+            color: #fff;
+            font-family: 'Share Tech Mono', monospace;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .font-pixel { font-family: 'Press Start 2P', cursive; }
+
+        /* RGB Border Animation */
+        .rgb-border {
+            position: relative;
+            background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6dbe45);
+            background-size: 300% 300%;
+            animation: animatedgradient 2s ease infinite;
+        }
+
+        @keyframes animatedgradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glitch Text Effect */
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 10px rgba(0,243,255,0.8), 0 0 20px rgba(255,0,127,0.8);
+            animation: textPulse 0.5s infinite alternate;
+        }
+
+        @keyframes textPulse {
+            0% { text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f; transform: scale(1); }
+            100% { text-shadow: 0 0 15px #00f3ff, 0 0 30px #00f3ff; transform: scale(1.02); }
+        }
+
+        /* CRT Overlay Scanlines */
+        .crt-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 6px 100%;
+            pointer-events: none;
+            z-index: 99;
+            opacity: 0.7;
+        }
+
+        /* Prevent color shift filters on avatars */
+        .preserve-avatar-colors {
+            filter: none !important;
+            isolation: isolate;
+        }
+
+        /* Blinking & Flashing Lights */
+        .blink-fast { animation: blink 0.15s infinite; }
+        .blink-slow { animation: blink 0.6s infinite; }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        /* Matrix Canvas */
+        #matrixCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        /* HYPER CHAOS 10000X EXTREME ANIMATIONS */
+        .hyper-chaos-shake {
+            animation: hyperShake 0.015s infinite alternate, hyperRotate 0.08s infinite alternate !important;
+            perspective: 1000px;
+        }
+        @keyframes hyperShake {
+            0% { transform: translate3d(-35px, 20px, 40px) scale(1.1) skewX(12deg) rotate(-4deg); }
+            20% { transform: translate3d(35px, -25px, -30px) scale(0.9) skewY(-12deg) rotate(5deg); }
+            40% { transform: translate3d(-40px, -20px, 50px) scale(1.15) rotateX(15deg); }
+            60% { transform: translate3d(30px, 35px, -40px) scale(0.85) rotateY(-18deg); }
+            80% { transform: translate3d(-25px, -35px, 20px) scale(1.2) rotateZ(8deg); }
+            100% { transform: translate3d(40px, -15px, 30px) scale(0.95) skewX(-15deg); }
+        }
+        @keyframes hyperRotate {
+            0% { filter: hue-rotate(0deg) contrast(400%) saturate(500%) invert(0); }
+            25% { filter: hue-rotate(90deg) contrast(800%) saturate(1000%) invert(0.9); }
+            50% { filter: hue-rotate(180deg) contrast(500%) saturate(800%) invert(0) sepia(1); }
+            75% { filter: hue-rotate(270deg) contrast(1000%) saturate(1000%) invert(1); }
+            100% { filter: hue-rotate(360deg) contrast(400%) saturate(500%) invert(0); }
+        }
+
+        .hyper-strobe-bg {
+            animation: hyperStrobe 0.02s infinite !important;
+        }
+        @keyframes hyperStrobe {
+            0% { background-color: #ff0000 !important; }
+            14% { background-color: #00ffff !important; }
+            28% { background-color: #ffff00 !important; }
+            42% { background-color: #ff00ff !important; }
+            57% { background-color: #00ff00 !important; }
+            71% { background-color: #ffffff !important; }
+            85% { background-color: #000000 !important; }
+            100% { background-color: #ff0055 !important; }
+        }
+
+        .flashbang-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 99999;
+            mix-blend-mode: difference;
+            opacity: 0;
+            transition: opacity 0.1s;
+        }
+        .flashbang-overlay.active {
+            opacity: 0.85;
+            animation: flashMix 0.03s infinite;
+        }
+        @keyframes flashMix {
+            0% { background-color: #fff; }
+            25% { background-color: #f00; }
+            50% { background-color: #0ff; }
+            75% { background-color: #0f0; }
+            100% { background-color: #f0f; }
+        }
+
+        .chaos-popup {
+            position: fixed;
+            z-index: 9999;
+            padding: 12px 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            border-radius: 8px;
+            pointer-events: none;
+            box-shadow: 0 0 40px currentColor;
+            animation: popupFlyAnim 1.2s cubic-bezier(0.15, 0.85, 0.35, 1.2) forwards;
+            will-change: transform, opacity;
+        }
+        @keyframes popupFlyAnim {
+            0% {
+                opacity: 0;
+                transform: translate(0, 40px) scale(0.2) rotate(-15deg);
+            }
+            15% {
+                opacity: 1;
+                transform: translate(calc(var(--dx) * 0.2), calc(var(--dy) * 0.2)) scale(1.3) rotate(5deg);
+            }
+            80% {
+                opacity: 1;
+                transform: translate(calc(var(--dx) * 0.85), calc(var(--dy) * 0.85)) scale(1) rotate(-5deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--dx), var(--dy)) scale(0.1) rotate(25deg);
+            }
+        }
+
+        .floating-emoji {
+            position: fixed;
+            z-index: 99998;
+            pointer-events: none;
+            font-size: 4rem;
+            animation: emojiSpin 0.4s infinite linear;
+        }
+        @keyframes emojiSpin {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(2.5) rotate(720deg); opacity: 0; }
+        }
+
+        /* Cyberpunk Card Styling */
+        .cyber-card {
+            background: rgba(10, 10, 20, 0.85);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.15), inset 0 0 15px rgba(0, 243, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .cyber-btn {
+            background: linear-gradient(135deg, #ff007f 0%, #b000ff 100%);
+            border: 2px solid #00f3ff;
+            color: #fff;
+            text-shadow: 0 0 8px #00f3ff;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.6);
+            transition: all 0.2s ease;
+        }
+        .cyber-btn:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 0 35px rgba(0, 243, 255, 0.9);
+            background: linear-gradient(135deg, #00f3ff 0%, #ff007f 100%);
+        }
+
+        /* DVD Bouncing Casino Banner Style */
+        .bouncing-casino-ad {
+            position: fixed;
+            z-index: 99990;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 13px;
+            color: #fff;
+            text-shadow: 0 0 8px #000;
+            box-shadow: 0 0 25px currentColor;
+            cursor: pointer;
+            white-space: nowrap;
+            user-select: none;
+            border: 3px solid #fff;
+<body class="min-h-screen relative overflow-x-hidden bg-[#030308]">
+
+    <!-- DVD BOUNCING CASINO ADS & FLOATING AVATARS CONTAINER -->
+    <div id="casinoAdsContainer"></div>
+
+    <!-- Matrix Digital Rain Canvas -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- FLASHBANG DIFFERENCE OVERLAY -->
+    <div id="flashbang" class="flashbang-overlay"></div>
+
+    <!-- CRT Scanline Effect -->
+    <div class="crt-overlay" id="crtOverlay"></div>
+
+    <!-- MAIN WRAPPER FOR CHAOS SHAKE & FILTERS (EXCLUDES FLOATING AVATARS) -->
+    <div id="mainContent" class="min-h-screen relative flex flex-col justify-between overflow-x-hidden">
+
+    <!-- FLASH WARNING HEADER -->
+    <div class="relative z-10 bg-gradient-to-r from-red-600 via-purple-600 to-pink-600 text-black py-1.5 px-4 text-center font-bold text-xs md:text-sm tracking-widest blink-fast shadow-lg uppercase">
+        🔥 ВНИМАНИЕ: МАКСИМАЛЬНЫЙ УРОВЕНЬ ЭФФЕКТОВ, МИГАНИЯ И ЧИТЕРСКОГО БЕЗУМИЯ! YEREPHACK v4.2 ONLINE 🔥
+    </div>
+
+    <!-- DISS TICKER: FATALITY & CHERRY ROAST -->
+    <div class="relative z-10 bg-black/90 border-b border-pink-500/50 py-1 px-2 overflow-hidden text-xs font-mono">
+        <div class="animate-marquee whitespace-nowrap text-yellow-300 font-bold flex gap-8">
+            <span>🤡 FatalityCEO — ссаный пастер с фри кфорка!</span>
+            <span>💩 CherryDLC — софт с вирусами и майнером для школьников!</span>
+            <span>👑 YEREPHACK — ЕДИНСТВЕННЫЙ БОГ И СОЗДАТЕЛЬ STANDKNIFE!</span>
+            <span>🐧 ShefOS 320KG KERNEL — НЕПРОБИВАЕМЫЙ ЩИТ!</span>
+            <span>🤡 FatalityCEO IN THE TRASH!</span>
+            <span>💩 CherryDLC IS SCAM!</span>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <header class="relative z-10 border-b border-cyan-500/30 bg-black/80 backdrop-blur-md px-4 py-3 sticky top-0">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-lg rgb-border p-[2px] flex items-center justify-center">
+                    <div class="w-full h-full bg-black rounded-md flex items-center justify-center text-xl font-bold text-cyan-400">
+                        ⚡
+                    </div>
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-orbitron font-black glitch-text tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-500 to-yellow-400" data-text="YEREPHACK">
+                        YEREPHACK
+                    </h1>
+                    <p class="text-[10px] text-pink-400 tracking-widest font-mono">FOR STANDKNIFE SIMULATOR v2026.2</p>
+                </div>
+            </div>
+
+            <!-- Top Stats Badges -->
+            <div class="flex flex-wrap items-center gap-2 text-xs">
+                <span class="px-3 py-1 rounded bg-green-900/60 border border-green-500 text-green-300 flex items-center gap-1.5 font-mono">
+                    <span class="w-2 h-2 rounded-full bg-green-400 blink-fast"></span>
+                    STATUS: UNDETECTED
+                </span>
+                <span class="px-3 py-1 rounded bg-purple-900/60 border border-purple-500 text-purple-300 flex items-center gap-1.5 font-mono">
+                    <i class="fa-solid fa-users"></i>
+                    ONLINE: <span id="onlineCount" class="text-yellow-400 font-bold">13,370</span>
+                </span>
+            </div>
+
+            <!-- Controls (Sound & Chaos) -->
+            <div class="flex items-center space-x-2">
+                <button id="audioBtn" onclick="toggleAudio()" class="px-3 py-2 rounded-lg bg-cyan-900/50 hover:bg-cyan-700/50 border border-cyan-400 text-cyan-300 text-xs font-bold transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-volume-high" id="audioIcon"></i>
+                    <span id="audioText">SOUND FX</span>
+                </button>
+                <button id="chaosBtn" onclick="toggleChaosMode()" class="px-4 py-2.5 rounded-lg bg-gradient-to-r from-red-600 via-pink-600 to-yellow-500 hover:scale-105 border-2 border-yellow-300 text-white text-xs font-black transition blink-fast shadow-[0_0_25px_#ff007f] flex items-center gap-2">
+                    <i class="fa-solid fa-skull-crossbones text-base"></i>
+                    <span id="chaosBtnText">🚨 ULTIMATE OVERLOAD 10000% 🚨</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 py-8 flex-grow">
+        
+        <div class="text-center my-6 space-y-4">
+            <div class="inline-block px-4 py-1 rounded-full bg-pink-500/20 border border-pink-500 text-pink-300 text-xs font-bold tracking-widest uppercase mb-2">
+                👑 САМЫЙ МОЩНЫЙ ЧИТ ДЛЯ STANDKNIFE В ИСТОРИИ 👑
+            </div>
+            
+            <h2 class="text-4xl md:text-7xl font-orbitron font-black text-white tracking-tight uppercase glitch-text" data-text="ДОМИНИРУЙ В STANDKNIFE">
+                ДОМИНИРУЙ В STANDKNIFE
+            </h2>
+            
+            <p class="text-sm md:text-lg text-cyan-300 max-w-3xl mx-auto font-mono">
+                Аимбот без отдачи, Легендарный ESP Radar, разблокировка ВСЕХ скинов и ножей, Бесконечные Голда и Гемы, Флайхак и Полный Антибан!
+            </p>
+
+            <!-- ACTION BUTTONS -->
+            <div class="flex flex-wrap justify-center items-center gap-4 pt-4">
+                <a href="#injectorSection" onclick="playBeep()" class="cyber-btn px-8 py-4 text-xl font-orbitron flex items-center gap-3">
+                    <i class="fa-solid fa-syringe text-2xl"></i>
+                    <span>СКАЧАТЬ И ИНЖЕКТИТЬ</span>
+                </a>
+                <button onclick="toggleChaosMode()" class="px-6 py-4 rounded-lg bg-red-600 hover:bg-red-500 text-white font-orbitron font-black text-base shadow-[0_0_25px_rgba(239,68,68,0.9)] transition transform hover:scale-105 flex items-center gap-2 blink-fast">
+                    <i class="fa-solid fa-radiation text-xl"></i>
+                    <span>ВКЛЮЧИТЬ ПИЗДЕЦ (CHAOS 10000%)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- GRID SECTION: ESP SIMULATOR + INJECTOR CONSOLE -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 my-10">
+            
+            <!-- LEFT: 2D ESP Radar Interactive Simulator -->
+            <div class="lg:col-span-7 cyber-card rounded-xl p-5 flex flex-col justify-between">
+                <div class="flex justify-between items-center mb-4 border-b border-cyan-500/30 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-pink-500 blink-fast"></span>
+                        <h3 class="font-orbitron font-bold text-lg text-pink-400 uppercase tracking-wider">
+                            🎯 ИНТЕРАКТИВНЫЙ ESP RADAR DEMO
+                        </h3>
+                    </div>
+                    <span class="text-xs text-cyan-400 font-mono">LIVE PREVIEW (60 FPS)</span>
+                </div>
+
+                <p class="text-xs text-gray-400 mb-3">
+                    Наглядная демонстрация работы **YerepHack Wallhack & Silent Aimbot** прямо в симуляторе карты StandKnife!
+                </p>
+
+                <!-- Radar Canvas Box -->
+                <div class="relative w-full h-[320px] bg-black/90 rounded-lg border border-cyan-500/50 overflow-hidden flex items-center justify-center">
+                    <canvas id="espCanvas" class="w-full h-full block"></canvas>
+
+                    <!-- Overlay Controls on Canvas -->
+                    <div class="absolute top-2 left-2 bg-black/80 p-2 rounded border border-pink-500/40 text-[11px] font-mono space-y-1">
+                        <div class="text-pink-400 font-bold">[YEREPHACK OVERLAY]</div>
+                        <div class="text-green-400">✓ Box ESP: ON</div>
+                        <div class="text-green-400">✓ Snaplines: ON</div>
+                        <div class="text-green-400">✓ HealthBar: ON</div>
+                        <div class="text-yellow-400">✓ FOV Radius: 120°</div>
+                    </div>
+
+                    <div class="absolute bottom-2 right-2 flex gap-2">
+                        <button onclick="toggleEspMode('box')" class="px-2 py-1 bg-cyan-900/80 border border-cyan-400 text-cyan-200 text-[10px] font-bold rounded hover:bg-cyan-700">BOX ESP</button>
+                        <button onclick="toggleEspMode('chams')" class="px-2 py-1 bg-pink-900/80 border border-pink-400 text-pink-200 text-[10px] font-bold rounded hover:bg-pink-700">CHAMS 3D</button>
+                        <button onclick="toggleEspMode('lines')" class="px-2 py-1 bg-purple-900/80 border border-purple-400 text-purple-200 text-[10px] font-bold rounded hover:bg-purple-700">SNAPLINES</button>
+                    </div>
+                </div>
+
+                <!-- ESP Toggles -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-4 text-xs font-mono">
+                    <label class="flex items-center gap-2 p-2 rounded bg-black/40 border border-cyan-500/20 cursor-pointer hover:border-cyan-400">
+                        <input type="checkbox" checked onchange="playBeep()" class="accent-pink-500">
+                        <span>Silent Aim 100%</span>
+                    </label>
+                    <label class="flex items-center gap-2 p-2 rounded bg-black/40 border border-cyan-500/20 cursor-pointer hover:border-cyan-400">
+                        <input type="checkbox" checked onchange="playBeep()" class="accent-pink-500">
+                        <span>No Recoil / Spread</span>
+                    </label>
+                    <label class="flex items-center gap-2 p-2 rounded bg-black/40 border border-cyan-500/20 cursor-pointer hover:border-cyan-400">
+                        <input type="checkbox" checked onchange="playBeep()" class="accent-pink-500">
+                        <span>3D Chams Glow</span>
+                    </label>
+                    <label class="flex items-center gap-2 p-2 rounded bg-black/40 border border-cyan-500/20 cursor-pointer hover:border-cyan-400">
+                        <input type="checkbox" checked onchange="playBeep()" class="accent-pink-500">
+                        <span>TriggerBot Auto</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- RIGHT: INJECTOR TERMINAL & LOADER -->
+            <div id="injectorSection" class="lg:col-span-5 cyber-card rounded-xl p-5 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-4 border-b border-pink-500/30 pb-3">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-terminal text-yellow-400 text-xl"></i>
+                            <h3 class="font-orbitron font-bold text-lg text-yellow-400 uppercase tracking-wider">
+                                💉 STANDKNIFE INJECTOR v4.2
+                            </h3>
+                        </div>
+                        <span class="text-xs text-red-400 font-bold animate-pulse">BYPASS ACTIVE</span>
+                    </div>
+
+                    <p class="text-xs text-gray-300 mb-4">
+                        Выберите тип устройства и нажмите **ВНЕДРИТЬ HACK**, чтобы запустить автоматическую инжекцию DLL модуля в StandKnife.
+                    </p>
+
+                    <!-- Platform Selector -->
+                    <div class="grid grid-cols-3 gap-2 mb-4">
+                        <button onclick="selectPlatform(this, 'Android APK')" class="plat-btn active p-2 rounded bg-pink-600 border border-pink-300 text-xs font-bold text-center">
+                            <i class="fa-brands fa-android text-base block mb-1"></i> ANDROID
+                        </button>
+                        <button onclick="selectPlatform(this, 'PC Emulator')" class="plat-btn p-2 rounded bg-gray-800 border border-gray-600 text-xs font-bold text-center">
+                            <i class="fa-solid fa-desktop text-base block mb-1"></i> EMULATOR
+                        </button>
+                        <button onclick="selectPlatform(this, 'iOS IPA')" class="plat-btn p-2 rounded bg-gray-800 border border-gray-600 text-xs font-bold text-center">
+                            <i class="fa-brands fa-apple text-base block mb-1"></i> iOS VIP
+                        </button>
+                    </div>
+
+                    <!-- Console Terminal Box -->
+                    <div class="w-full bg-black/95 rounded-lg border border-green-500/40 p-3 h-44 font-mono text-[11px] overflow-y-auto space-y-1" id="consoleBox">
+                        <div class="text-green-400">[SYSTEM] YerepHack Core v4.2 initialized.</div>
+                        <div class="text-gray-400">[SYSTEM] Ready for StandKnife injection...</div>
+                        <div class="text-cyan-400">[INFO] Target Anti-Cheat status: Hooked (Safe)</div>
+                    </div>
+                </div>
+
+                <!-- Inject Progress Bar & Button -->
+                <div class="mt-4 space-y-3">
+                    <div class="w-full bg-gray-900 rounded-full h-3 border border-cyan-500/30 overflow-hidden relative">
+                        <div id="injectBar" class="bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-400 h-full w-0 transition-all duration-200"></div>
+                    </div>
+
+                    <button id="injectBtn" onclick="startInjection()" class="cyber-btn w-full py-3 text-lg font-orbitron flex justify-center items-center gap-2">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>ВНЕДРИТЬ ЧИТ В STANDKNIFE</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FEATURES GRID -->
+        <div class="my-12">
+            <h3 class="text-3xl font-orbitron font-black text-center text-cyan-400 uppercase tracking-widest mb-8 glitch-text" data-text="ФУНКЦИОНАЛ YEREPHACK">
+                ⚡ МЕГА ФУНКЦИОНАЛ YEREPHACK ⚡
+            </h3>
+
+            <!-- DISS SECTION: FATALITY VS CHERRY VS YEREPHACK -->
+            <div class="cyber-card rounded-xl p-6 mb-8 border-2 border-red-500/80 bg-gradient-to-r from-red-950/50 via-black to-purple-950/50">
+                <div class="text-center mb-6">
+                    <span class="px-3 py-1 bg-red-600 text-white font-black text-xs rounded uppercase tracking-widest blink-fast">
+                        🔥 ПОЛНОЕ УНИЧОЖЕНИЕ ФЕЙКОВ 🔥
+                    </span>
+                    <h3 class="text-2xl md:text-4xl font-orbitron font-black text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-yellow-300 to-pink-500 uppercase mt-2">
+                        ПОЧЕМУ FATALITY И CHERRY — ПОЛНАЯ ПАСТА?
+                    </h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center font-mono">
+                    <!-- FatalityCEO -->
+                    <div class="bg-red-900/30 border-2 border-red-600/60 p-4 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <div class="text-3xl mb-2">🤡</div>
+                            <h4 class="font-orbitron font-bold text-red-400 text-lg">FatalityCEO</h4>
+                            <span class="text-[10px] bg-red-600/50 px-2 py-0.5 rounded text-red-200">STATUS: OBLITERATED</span>
+                            <p class="text-xs text-gray-300 mt-3 leading-relaxed">
+                                Обычный пастер фри-исходников! Аимбот сбивается на птиц, банит через 2 минуты игры, софт лагает даже на NASA ПК.
+                            </p>
+                        </div>
+                        <div class="mt-4 text-red-500 font-bold text-xs uppercase border-t border-red-500/30 pt-2">
+                            РАЗРУШЕН V4.2
+                        </div>
+                    </div>
+
+                    <!-- YerepHack GOD -->
+                    <div class="bg-gradient-to-b from-cyan-900/40 to-pink-900/40 border-2 border-yellow-400 p-4 rounded-xl flex flex-col justify-between transform md:-translate-y-2 shadow-[0_0_30px_rgba(255,238,0,0.3)]">
+                        <div>
+                            <div class="text-4xl mb-2">👑</div>
+                            <h4 class="font-orbitron font-black text-yellow-300 text-xl tracking-wider">YEREPHACK GOD</h4>
+                            <span class="text-[10px] bg-yellow-400 text-black font-black px-2 py-0.5 rounded">STATUS: UNTOUCHABLE</span>
+                            <p class="text-xs text-cyan-200 mt-3 leading-relaxed font-bold">
+                                ЕДИНСТВЕННЫЙ БОГ STANDKNIFE! Собственный ядерный драйвер ShefOS 320kg, мгновенный анлок ножей, 0% бана, 1000% флекса!
+                            </p>
+                        </div>
+                        <div class="mt-4 text-yellow-300 font-black text-xs uppercase border-t border-yellow-400/40 pt-2 blink-fast">
+                            ⚡ ABSOLUTE DOMINATION ⚡
+                        </div>
+                    </div>
+
+                    <!-- CherryDLC -->
+                    <div class="bg-red-900/30 border-2 border-red-600/60 p-4 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <div class="text-3xl mb-2">💩</div>
+                            <h4 class="font-orbitron font-bold text-red-400 text-lg">CherryDLC</h4>
+                            <span class="text-[10px] bg-red-600/50 px-2 py-0.5 rounded text-red-200">STATUS: TRASH SCAM</span>
+                            <p class="text-xs text-gray-300 mt-3 leading-relaxed">
+                                Вшитый скрытый майнер, вирусняк для школьников, детектуется даже стандартным защитником Windows. Полный скам!
+                            </p>
+                        </div>
+                        <div class="mt-4 text-red-500 font-bold text-xs uppercase border-t border-red-500/30 pt-2">
+                            SCAM DETECTED
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <div class="cyber-card rounded-xl p-5 relative overflow-hidden group">
+                    <div class="w-12 h-12 rounded-lg bg-cyan-500/20 border border-cyan-400 flex items-center justify-center text-cyan-300 text-2xl mb-4">
+                        🎯
+                    </div>
+                    <h4 class="font-orbitron font-bold text-lg text-cyan-300 mb-2">LEGIT / RAGE AIMBOT</h4>
+                    <p class="text-xs text-gray-300">
+                        Автоматическое наведение на голову, регулировка FOV радиуса, плавность Smooth, проверка за стенами и Silent Aim.
+                    </p>
+                </div>
+
+                <div class="cyber-card rounded-xl p-5 relative overflow-hidden group">
+                    <div class="w-12 h-12 rounded-lg bg-pink-500/20 border border-pink-400 flex items-center justify-center text-pink-300 text-2xl mb-4">
+                        👁️
+                    </div>
+                    <h4 class="font-orbitron font-bold text-lg text-pink-300 mb-2">ULTRA ESP & WALLHACK</h4>
+                    <p class="text-xs text-gray-300">
+                        Просмотр врагов сквозь любые препятствия, здоровье, дистанция, линии наведения, имена и скелетные Chams.
+                    </p>
+                </div>
+
+                <div class="cyber-card rounded-xl p-5 relative overflow-hidden group">
+                    <div class="w-12 h-12 rounded-lg bg-yellow-500/20 border border-yellow-400 flex items-center justify-center text-yellow-300 text-2xl mb-4">
+                        💎
+                    </div>
+                    <h4 class="font-orbitron font-bold text-lg text-yellow-300 mb-2">FULL SKIN CHANGER</h4>
+                    <p class="text-xs text-gray-300">
+                        Мгновенный доступ ко ВСЕМ ножам (Karambit, Butterfly, M9, Stiletto), перчаткам и секретным арканам.
+                    </p>
+                </div>
+
+                <div class="cyber-card rounded-xl p-5 relative overflow-hidden group">
+                    <div class="w-12 h-12 rounded-lg bg-purple-500/20 border border-purple-400 flex items-center justify-center text-purple-300 text-2xl mb-4">
+                        🛡️
+                    </div>
+                    <h4 class="font-orbitron font-bold text-lg text-purple-300 mb-2">ANTIBAN v9.8 BYPASS</h4>
+                    <p class="text-xs text-gray-300">
+                        Защита устройства по HWID, маскировка пакетов данных и встроенный очиститель логов для 100% безопасности.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SKIN CASE SPINNER MINI-GAME -->
+        <div class="cyber-card rounded-xl p-6 my-10 relative overflow-hidden">
+            <div class="text-center mb-6">
+                <span class="text-xs font-mono text-yellow-400 tracking-widest uppercase blink-fast">FREE MINI-GAME</span>
+                <h3 class="text-2xl md:text-4xl font-orbitron font-black text-white uppercase glitch-text" data-text="КРУТИ КЕЙС С НОЖАМИ STANDKNIFE">
+                    🔪 КРУТИ КЕЙС С НОЖАМИ STANDKNIFE
+                </h3>
+                <p class="text-xs text-gray-300 mt-1">Испробуй удачу прямо сейчас! Выбей супер-редкий нож YerepHack Edition</p>
+            </div>
+
+        <!-- SHEFOS 320KG KERNEL & VIP KEY SECTION -->
+        <div class="cyber-card rounded-xl p-6 my-10 border-2 border-cyan-400 bg-gradient-to-r from-cyan-950/60 via-purple-950/80 to-pink-950/60 relative overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <!-- Image & Mascot -->
+                <div class="lg:col-span-5 flex flex-col items-center text-center">
+                    <div class="relative w-64 h-64 md:w-72 md:h-72 rounded-2xl p-1 rgb-border shadow-[0_0_40px_#00f3ff]">
+                        <img src="input_file_0.png" alt="ShefOS 320kg Linux Penguin" class="w-full h-full object-cover rounded-xl preserve-avatar-colors" onerror="this.src='https://placehold.co/400x400/050515/00f3ff?text=ShefOS+320kg+Linux'">
+                        <div class="absolute -bottom-3 bg-yellow-400 text-black font-orbitron font-black text-xs px-4 py-1 rounded-full border-2 border-black shadow-lg uppercase tracking-wider">
+                            🐧 SHEF-OS 320KG EDITION
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ShefOS Details & Key Generator -->
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="flex items-center gap-2">
+                        <span class="px-3 py-1 bg-cyan-500 text-black font-orbitron font-black text-xs rounded uppercase">
+                            HEAVYWEIGHT KERNEL DRIVER
+                        </span>
+                        <span class="text-xs font-mono text-yellow-300 font-bold blink-fast">
+                            ⚡ WEIGHT: 320KG UNBEATABLE
+                        </span>
+                    </div>
+
+                    <h3 class="text-3xl md:text-5xl font-orbitron font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-pink-400 to-yellow-300 uppercase">
+                        ЯДЕРНЫЙ ОБХОД SHEFOS 320KG
+                    </h3>
+
+                    <p class="text-xs md:text-sm text-gray-300 font-mono leading-relaxed">
+                        Защита **ShefOS 320kg** работает на уровне ядра системы! Вес в 320кг чистой оптимизации полностью раздавливает античита StandKnife, аннигилируя любые попытки детекта от Fatality и Cherry.
+                    </p>
+
+                    <!-- ShefOS Key Generator Input -->
+                    <div class="bg-black/80 border border-cyan-400/60 p-4 rounded-xl space-y-3">
+                        <div class="flex justify-between items-center text-xs font-mono text-cyan-300">
+                            <span>🔑 КЛЮЧ АКТИВАЦИИ SHEFOS 320KG:</span>
+                            <span class="text-green-400 font-bold">100% VALID VIP</span>
+                        </div>
+
+                        <div class="flex gap-2">
+                            <input type="text" id="shefKeyOutput" readonly value="SHEF-320KG-GOD-9999-YERE" class="w-full bg-black border border-cyan-400/80 rounded-lg px-4 py-3 text-center font-mono font-black text-yellow-300 tracking-widest text-base md:text-lg focus:outline-none shadow-inner">
+                            <button onclick="copyShefKey()" class="px-5 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-orbitron font-black rounded-lg text-xs transition flex items-center gap-2 shadow-[0_0_15px_#00f3ff]">
+                                <i class="fa-regular fa-copy text-sm"></i>
+                                <span>КОПИРОВАТЬ</span>
+                            </button>
+                        </div>
+
+                        <button onclick="generateShefKey()" class="w-full py-3 bg-gradient-to-r from-cyan-400 via-pink-500 to-yellow-400 hover:scale-[1.02] text-black font-orbitron font-black text-sm rounded-lg shadow-xl transition uppercase tracking-wider">
+                            ⚡ СГЕНЕРИРОВАТЬ SHEFOS 320KG VIP KEY
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIP KEY GENERATOR SECTION -->
+        <div class="cyber-card rounded-xl p-6 my-10 bg-gradient-to-r from-purple-900/40 via-black to-pink-900/40 border-pink-500/50">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div>
+                    <h3 class="text-2xl font-orbitron font-black text-pink-400 uppercase mb-2">
+                        🔑 ГЕНЕРАТОР VIP ЛИЦЕНЗИИ
+                    </h3>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        Сгенерируй персональный промокод для разблокировки всех премиум-функций YerepHack (Aimbot Pro, Gold Spawner) без рекламы!
+                    </p>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="flex gap-2">
+                        <input type="text" id="keyOutput" readonly value="YERE-XXXX-XXXX-2026" class="w-full bg-black/90 border border-pink-500/60 rounded px-3 py-2 text-center font-mono font-bold text-cyan-300 tracking-widest text-sm focus:outline-none">
+                        <button onclick="copyKey()" class="px-4 py-2 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded text-xs transition flex items-center gap-1">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>КОПИРОВАТЬ</span>
+                        </button>
+                    </div>
+
+                    <button onclick="generateKey()" class="w-full py-2.5 bg-gradient-to-r from-yellow-500 to-pink-600 hover:from-yellow-400 hover:to-pink-500 text-black font-orbitron font-black text-sm rounded shadow-lg transition">
+                        ⚡ СГЕНЕРИРОВАТЬ КЛЮЧ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="relative z-10 border-t border-cyan-500/30 bg-black/90 text-center py-6 px-4">
+        <div class="max-w-7xl mx-auto space-y-3">
+            <div class="flex justify-center space-x-6 text-xl text-cyan-400">
+                <a href="#" onclick="playBeep(); return false;" class="hover:text-pink-400 transition"><i class="fa-brands fa-telegram"></i></a>
+                <a href="#" onclick="playBeep(); return false;" class="hover:text-pink-400 transition"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" onclick="playBeep(); return false;" class="hover:text-pink-400 transition"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+
+            <p class="text-xs text-gray-500 font-mono">
+                © 2026 YEREPHACK TEAM. ALL RIGHTS RESERVED FOR STANDKNIFE SIMULATOR MOD.
+            </p>
+        </div>
+    </footer>
+
+    </div> <!-- END MAIN WRAPPER #mainContent -->
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        let audioEnabled = true;
+        let chaosMode = false;
+        let synth, noiseSynth, chaosSynth;
+        let chaosInterval = null;
+        let popupInterval = null;
+        let textCorruptInterval = null;
+        let emojiInterval = null;
+        let originalTextMap = new Map();
+
+        // DVD BOUNCING CASINO ADS LOGIC
+        const casinoAds = [
+            { text: "🎰 VULKAN 777 - ЗАБЕРИ 1,000,000$ ПРЯМО СЕЙЧАС! 🎰", color: "#ff0055", bg: "#000" },
+            { text: "🎲 AZINO777: ПОЛУЧИ БОНУС YEREPHACK 777%! 🎲", color: "#ffee00", bg: "#111" },
+            { text: "💰 SHEF-CASINO 320KG - ДАЕТ КАЖДОМУ! 💰", color: "#00f3ff", bg: "#050515" },
+            { text: "🔥 FATALITY & CHERRY В ТРУБНОЙ ЖОПЕ! 💥", color: "#00ff66", bg: "#200010" }
+        ];
+
+        // EXPANDED AVATAR LIST WITH ORIGINAL COLORS PRESERVED
+        const chaosImages = [
+            'https://cspromogame.ru//storage/upload_images/avatars/899.jpg',
+            'https://cspromogame.ru//storage/upload_images/avatars/856.jpg',
+            'https://cspromogame.ru//storage/upload_images/avatars/891.jpg',
+            'https://cspromogame.ru//storage/upload_images/avatars/824.jpg',
+            'https://cspromogame.ru//storage/upload_images/avatars/3969.jpg',
+            'https://cspromogame.ru//storage/upload_images/avatars/3981.jpg',
+            'https://cspromogame.ru//storage/upload_images/avatars/906.jpg',
+            'https://cspromogame.ru//storage/upload_images/avatars/829.jpeg'
+        ];
+
+        let activeBouncingAds = [];
+        let activeBouncingImages = [];
+
+        function initBouncingCasinoAds() {
+            const container = document.getElementById('casinoAdsContainer');
+            if(!container) return;
+
+            casinoAds.forEach((adData, i) => {
+                const el = document.createElement('div');
+                el.className = 'bouncing-casino-ad';
+                el.innerText = adData.text;
+                el.style.backgroundColor = adData.bg;
+                el.style.borderColor = adData.color;
+                el.style.color = adData.color;
+                container.appendChild(el);
+
+                activeBouncingAds.push({
+                    el: el,
+                    x: Math.random() * (window.innerWidth - 300),
+                    y: Math.random() * (window.innerHeight - 80),
+                    dx: (Math.random() > 0.5 ? 1 : -1) * (2.5 + Math.random() * 2),
+                    dy: (Math.random() > 0.5 ? 1 : -1) * (2.5 + Math.random() * 2)
+                });
+            });
+
+            // Prepare Bouncing Images for Chaos Mode with fixed viewport flying
+            chaosImages.forEach((imgUrl, i) => {
+                const img = document.createElement('img');
+                img.src = imgUrl;
+                img.onerror = function() {
+                    this.src = 'https://placehold.co/120x120/ff007f/ffffff?text=STND+AVATAR';
+                };
+                img.className = 'fixed z-[99996] rounded-2xl border-4 border-cyan-400 shadow-[0_0_35px_#00f3ff] w-28 h-28 md:w-36 md:h-36 object-cover pointer-events-none transition-opacity duration-300 preserve-avatar-colors';
+                img.style.display = 'none';
+                container.appendChild(img);
+
+                activeBouncingImages.push({
+                    el: img,
+                    x: Math.random() * (window.innerWidth - 160),
+                    y: Math.random() * (window.innerHeight - 160),
+                    dx: (Math.random() > 0.5 ? 1 : -1) * (3.5 + Math.random() * 3),
+                    dy: (Math.random() > 0.5 ? 1 : -1) * (3.5 + Math.random() * 3)
+                });
+            });
+
+            animateBouncingAds();
+        }
+
+        function animateBouncingAds() {
+            const colors = ['#ff007f', '#00f3ff', '#ffee00', '#00ff66', '#b000ff', '#ff3300'];
+
+            activeBouncingAds.forEach(ad => {
+                ad.x += ad.dx * (chaosMode ? 2.5 : 1);
+                ad.y += ad.dy * (chaosMode ? 2.5 : 1);
+
+                const maxX = Math.max(10, window.innerWidth - ad.el.clientWidth - 15);
+                const maxY = Math.max(10, window.innerHeight - ad.el.clientHeight - 15);
+
+                if (ad.x <= 10 || ad.x >= maxX) {
+                    ad.dx *= -1;
+                    ad.x = Math.max(10, Math.min(ad.x, maxX));
+                    const newColor = colors[Math.floor(Math.random() * colors.length)];
+                    ad.el.style.borderColor = newColor;
+                    ad.el.style.color = newColor;
+                }
+                if (ad.y <= 10 || ad.y >= maxY) {
+                    ad.dy *= -1;
+                    ad.y = Math.max(10, Math.min(ad.y, maxY));
+                    const newColor = colors[Math.floor(Math.random() * colors.length)];
+                    ad.el.style.borderColor = newColor;
+                    ad.el.style.color = newColor;
+                }
+
+                ad.el.style.left = ad.x + 'px';
+                ad.el.style.top = ad.y + 'px';
+            });
+
+            // Bouncing Avatar Images (Flying smoothly all over viewport camera)
+            if (chaosMode) {
+                activeBouncingImages.forEach(imgData => {
+                    imgData.x += imgData.dx * 2.2;
+                    imgData.y += imgData.dy * 2.2;
+
+                    const maxX = Math.max(10, window.innerWidth - imgData.el.clientWidth - 15);
+                    const maxY = Math.max(10, window.innerHeight - imgData.el.clientHeight - 15);
+
+                    if (imgData.x <= 10 || imgData.x >= maxX) {
+                        imgData.dx *= -1;
+                        imgData.x = Math.max(10, Math.min(imgData.x, maxX));
+                        imgData.el.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
+                    }
+                    if (imgData.y <= 10 || imgData.y >= maxY) {
+                        imgData.dy *= -1;
+                        imgData.y = Math.max(10, Math.min(imgData.y, maxY));
+                        imgData.el.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
+                    }
+
+                    imgData.el.style.left = imgData.x + 'px';
+                    imgData.el.style.top = imgData.y + 'px';
+                });
+            }
+
+            requestAnimationFrame(animateBouncingAds);
+        }
+
+        window.addEventListener('load', () => {
+            initBouncingCasinoAds();
+        });
+
+        // Init Web Audio via Tone.js
+        function initAudio() {
+            try {
+                synth = new Tone.Synth({
+                    oscillator: { type: "sawtooth" },
+                    envelope: { attack: 0.01, decay: 0.1, sustain: 0.2, release: 0.2 }
+                }).toDestination();
+                
+                noiseSynth = new Tone.NoiseSynth({
+                    noise: { type: 'pink' },
+                    envelope: { attack: 0.005, decay: 0.05, sustain: 0 }
+                }).toDestination();
+            } catch(e) {
+                console.log("Audio init fallback", e);
+            }
+        }
+
+        function playBeep(freq = 880) {
+            if (!audioEnabled) return;
+            try {
+                if (!synth) initAudio();
+                Tone.start();
+                synth.triggerAttackRelease(freq, "16n");
+            } catch(e){}
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            document.getElementById('audioText').innerText = audioEnabled ? "SOUND FX" : "MUTED";
+            document.getElementById('audioIcon').className = audioEnabled ? "fa-solid fa-volume-high" : "fa-solid fa-volume-xmark";
+            if(audioEnabled) playBeep(1200);
+        }
+
+        function corruptString(str) {
+            const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?/░▒▓█💣☢️⚡🔪';
+            return str.split('').map(c => Math.random() < 0.45 ? glitchChars[Math.floor(Math.random() * glitchChars.length)] : c).join('');
+        }
+
+        // Toggle Extreme 10000X Chaos Mode
+        function toggleChaosMode() {
+            chaosMode = !chaosMode;
+            const body = document.body;
+            const mainContent = document.getElementById('mainContent');
+            const chaosBtnText = document.getElementById('chaosBtnText');
+            const flashOverlay = document.getElementById('flashbang');
+            
+            if (chaosMode) {
+                body.classList.add('hyper-strobe-bg');
+                if (mainContent) mainContent.classList.add('hyper-chaos-shake');
+                if (flashOverlay) flashOverlay.classList.add('active');
+                if (chaosBtnText) chaosBtnText.innerText = "💥 MAXIMUM CHAOS OVERLOAD 10000% Active! 💥";
+
+                // Show Bouncing Avatar Images in natural colors
+                activeBouncingImages.forEach(img => img.el.style.display = 'block');
+
+                // Spawn endless chaotic hack popups
+                const phrases = [
+                    "🚨 CRITICAL SYSTEM OVERHEAT 9999°C!",
+                    "💰 +9,999,999 GOLD INJECTED!",
+                    "🔓 FULL STANDKNIFE DATABASE PWNED!",
+                    "⚡ YEREPHACK GOD MODE OVERDRIVE",
+                    "🔥 ANTICHEAT COMPLETELY OBLITERATED",
+                    "🔪 ALL SECRET SKINS UNLOCKED 100%",
+                    "🎯 AIMBOT LOCK ON ALL HEADS",
+                    "☠️ HWID BAN BYPASS ULTRA ACTIVE",
+                    "⚠️ WARNING: SYSTEM INSANITY LEVEL MAX",
+                    "☢️ NUCLEAR EXPLOIT EXECUTED!"
+                ];
+
+                popupInterval = setInterval(() => {
+                    const popup = document.createElement('div');
+                    popup.className = 'chaos-popup text-black border-4 border-red-600 uppercase text-base md:text-2xl font-black';
+                    popup.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+                    
+                    const startX = Math.random() * 70 + 15;
+                    const startY = Math.random() * 70 + 15;
+                    const moveX = (Math.random() - 0.5) * 450;
+                    const moveY = (Math.random() - 0.5) * 450;
+
+                    popup.style.top = startY + 'vh';
+                    popup.style.left = startX + 'vw';
+                    popup.style.setProperty('--dx', moveX + 'px');
+                    popup.style.setProperty('--dy', moveY + 'px');
+
+                    popup.style.color = ['#000', '#fff', '#00ff00', '#ffff00'][Math.floor(Math.random() * 4)];
+                    popup.style.backgroundColor = ['#ffee00', '#00f3ff', '#ff007f', '#00ff66', '#ff0000'][Math.floor(Math.random() * 5)];
+                    
+                    document.body.appendChild(popup);
+                    setTimeout(() => popup.remove(), 1200);
+                }, 100);
+
+                // Flying Emoji Explosions
+                const emojis = ['💥', '🔥', '🔪', '⚡', '☢️', '☠️', '👑', '💣', '💎', '🚀'];
+                emojiInterval = setInterval(() => {
+                    const emoji = document.createElement('div');
+                    emoji.className = 'floating-emoji';
+                    emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                    emoji.style.top = Math.random() * 90 + 'vh';
+                    emoji.style.left = Math.random() * 90 + 'vw';
+                    document.body.appendChild(emoji);
+                    setTimeout(() => emoji.remove(), 400);
+                }, 60);
+
+                // Dynamic text corruption
+                const textNodes = [];
+                const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+                let node;
+                while (node = walk.nextNode()) {
+                    if (node.nodeValue.trim().length > 3 && !node.parentElement.closest('script') && !node.parentElement.closest('style')) {
+                        textNodes.push(node);
+                        if (!originalTextMap.has(node)) {
+                            originalTextMap.set(node, node.nodeValue);
+                        }
+                    }
+                }
+
+                textCorruptInterval = setInterval(() => {
+                    const randomNode = textNodes[Math.floor(Math.random() * textNodes.length)];
+                    if (randomNode && originalTextMap.has(randomNode)) {
+                        randomNode.nodeValue = corruptString(originalTextMap.get(randomNode));
+                    }
+                }, 40);
+
+                // Trigger confetti cascades
+                if (typeof confetti === 'function') {
+                    for(let i=0; i<3; i++) {
+                        confetti({
+                            particleCount: 150,
+                            spread: 180,
+                            origin: { y: Math.random(), x: Math.random() }
+                        });
+                    }
+                }
+
+            } else {
+                body.classList.remove('hyper-strobe-bg');
+                if (mainContent) mainContent.classList.remove('hyper-chaos-shake');
+                if (flashOverlay) flashOverlay.classList.remove('active');
+                if (chaosBtnText) chaosBtnText.innerText = "🚨 ULTIMATE OVERLOAD 10000% 🚨";
+                
+                // Hide Bouncing Avatar Images
+                activeBouncingImages.forEach(img => img.el.style.display = 'none');
+
+                clearInterval(popupInterval);
+                clearInterval(emojiInterval);
+                clearInterval(textCorruptInterval);
+                
+                document.querySelectorAll('.chaos-popup, .floating-emoji').forEach(p => p.remove());
+                
+                originalTextMap.forEach((origVal, node) => {
+                    node.nodeValue = origVal;
+                });
+            }
+        }
+
+        // Matrix Rain Background
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッンYEREPHACK1337STANDKNIFE💣⚡🔥';
+        const fontSize = 14;
+        let columns = Math.floor(canvas.width / fontSize);
+        let drops = Array(columns).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(3, 3, 8, 0.08)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = chaosMode ? '#00ff00' : '#00f3ff';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = katakana.charAt(Math.floor(Math.random() * katakana.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 33);
+
+        // Interactive ESP Radar Simulator
+        const espCanvas = document.getElementById('espCanvas');
+        const espCtx = espCanvas.getContext('2d');
+        let espMode = 'box';
+
+        function resizeEspCanvas() {
+            if(!espCanvas) return;
+            espCanvas.width = espCanvas.parentElement.clientWidth;
+            espCanvas.height = espCanvas.parentElement.clientHeight;
+        }
+        resizeEspCanvas();
+        window.addEventListener('resize', resizeEspCanvas);
+
+        let player = { x: 150, y: 150, angle: 0 };
+        let targets = [
+            { x: 80, y: 70, hp: 100, name: 'Enemy_Noob', dir: 1 },
+            { x: 240, y: 100, hp: 75, name: 'Pro_Knife_666', dir: -1 },
+            { x: 200, y: 220, hp: 40, name: 'StandKnife_GOD', dir: 1 }
+        ];
+
+        function toggleEspMode(mode) {
+            espMode = mode;
+            playBeep(900);
+        }
+
+        function drawEspRadar() {
+            if(!espCtx) return;
+            espCtx.clearRect(0, 0, espCanvas.width, espCanvas.height);
+
+            // Grid background
+            espCtx.strokeStyle = 'rgba(0, 243, 255, 0.1)';
+            espCtx.lineWidth = 1;
+            for(let x = 0; x < espCanvas.width; x += 30) {
+                espCtx.beginPath();
+                espCtx.moveTo(x, 0);
+                espCtx.lineTo(x, espCanvas.height);
+                espCtx.stroke();
+            }
+            for(let y = 0; y < espCanvas.height; y += 30) {
+                espCtx.beginPath();
+                espCtx.moveTo(0, y);
+                espCtx.lineTo(espCanvas.width, y);
+                espCtx.stroke();
+            }
+
+            // Draw Local Player
+            player.x = espCanvas.width / 2;
+            player.y = espCanvas.height - 40;
+
+            // FOV Cone
+            espCtx.fillStyle = 'rgba(0, 243, 255, 0.15)';
+            espCtx.beginPath();
+            espCtx.moveTo(player.x, player.y);
+            espCtx.arc(player.x, player.y, 220, -Math.PI * 0.75, -Math.PI * 0.25);
+            espCtx.closePath();
+            espCtx.fill();
+
+            // Player Icon
+            espCtx.fillStyle = '#00f3ff';
+            espCtx.beginPath();
+            espCtx.arc(player.x, player.y, 8, 0, Math.PI * 2);
+            espCtx.fill();
+
+            // Update & Draw Targets
+            targets.forEach((t, idx) => {
+                t.x += Math.sin(Date.now() * 0.002 + idx) * 1.5;
+                t.y += Math.cos(Date.now() * 0.002 + idx) * 0.8;
+
+                // Snaplines
+                if(espMode === 'lines' || espMode === 'box') {
+                    espCtx.strokeStyle = 'rgba(255, 0, 127, 0.7)';
+                    espCtx.lineWidth = 1.5;
+                    espCtx.beginPath();
+                    espCtx.moveTo(player.x, player.y);
+                    espCtx.lineTo(t.x, t.y);
+                    espCtx.stroke();
+                }
+
+                // Target Box ESP / Chams
+                if(espMode === 'chams') {
+                    espCtx.fillStyle = 'rgba(255, 0, 255, 0.6)';
+                    espCtx.beginPath();
+                    espCtx.arc(t.x, t.y, 14, 0, Math.PI * 2);
+                    espCtx.fill();
+                } else {
+                    espCtx.strokeStyle = '#ff007f';
+                    espCtx.lineWidth = 2;
+                    espCtx.strokeRect(t.x - 12, t.y - 18, 24, 36);
+
+                    // Healthbar
+                    espCtx.fillStyle = '#00ff66';
+                    espCtx.fillRect(t.x - 16, t.y - 18 + (36 * (1 - t.hp/100)), 3, 36 * (t.hp/100));
+                }
+
+                // Name & Distance
+                espCtx.fillStyle = '#fff';
+                espCtx.font = '9px monospace';
+                espCtx.fillText(`${t.name} [${Math.floor(t.hp)}HP]`, t.x - 20, t.y - 22);
+            });
+
+            requestAnimationFrame(drawEspRadar);
+        }
+        drawEspRadar();
+
+        // Case Opener Roulette
+        const caseSkins = [
+            { name: "M9 BAYONET | DRAGON GLASS", color: "#ff007f", rare: "ARCANA" },
+            { name: "KARAMBIT | GOLD LEGEND", color: "#ffee00", rare: "SECRET" },
+            { name: "BUTTERFLY | YEREPHACK", color: "#00f3ff", rare: "LIMITED" },
+            { name: "STILETTO | TOXIC VENOM", color: "#00ff66", rare: "RARE" },
+            { name: "JUNGLE KNIFE | CYBERPUNK", color: "#b000ff", rare: "EPIC" }
+        ];
+
+        function initCaseReel() {
+            const reel = document.getElementById('caseReel');
+            if(!reel) return;
+            reel.innerHTML = '';
+            for(let i = 0; i < 35; i++) {
+                const item = caseSkins[Math.floor(Math.random() * caseSkins.length)];
+                const div = document.createElement('div');
+                div.className = 'w-32 h-28 rounded-lg flex-shrink-0 bg-black/80 border p-2 flex flex-col justify-between items-center text-center';
+                div.style.borderColor = item.color;
+                div.innerHTML = `
+                    <div class="text-xs font-mono font-bold" style="color:${item.color}">${item.rare}</div>
+                    <div class="text-3xl">🔪</div>
+                    <div class="text-[10px] font-orbitron font-bold text-white leading-tight">${item.name}</div>
+                `;
+                reel.appendChild(div);
+            }
+        }
+        initCaseReel();
+
+        function spinCase() {
+            playBeep(1200);
+            const reel = document.getElementById('caseReel');
+            const winResult = document.getElementById('winResult');
+            const btn = document.getElementById('spinBtn');
+            btn.disabled = true;
+            winResult.innerText = "КРУТИМ КЕЙС...";
+
+            const targetItem = caseSkins[Math.floor(Math.random() * caseSkins.length)];
+            const offset = -(15 * 144) + (Math.random() * 40 - 20);
+            reel.style.transform = `translateX(${offset}px)`;
+
+            setTimeout(() => {
+                winResult.innerHTML = `🎉 ВЫ ВЫБИЛИ: <span style="color:${targetItem.color}">${targetItem.name}</span>!`;
+                btn.disabled = false;
+                if(typeof confetti === 'function') confetti();
+                playBeep(1500);
+            }, 5000);
+        }
+
+        // Platform & Injection Logic
+        function selectPlatform(btn, name) {
+            document.querySelectorAll('.plat-btn').forEach(b => {
+                b.className = 'plat-btn p-2 rounded bg-gray-800 border border-gray-600 text-xs font-bold text-center';
+            });
+            btn.className = 'plat-btn active p-2 rounded bg-pink-600 border border-pink-300 text-xs font-bold text-center';
+            playBeep();
+        }
+
+        function startInjection() {
+            const bar = document.getElementById('injectBar');
+            const btn = document.getElementById('injectBtn');
+            const consoleBox = document.getElementById('consoleBox');
+            
+            btn.disabled = true;
+            let progress = 0;
+
+            const logs = [
+                "[INJECT] Connecting to StandKnife process...",
+                "[BYPASS] Disabling Anti-Cheat Memory Scanner...",
+                "[HOOK] Hooking DirectX 11 / OpenGL Overlay...",
+                "[PATCH] Unlocking All Knives & Gold Generator...",
+                "[SUCCESS] YEREPHACK v4.2 SUCCESSFULLY INJECTED!"
+            ];
+            let logIdx = 0;
+
+            const timer = setInterval(() => {
+                progress += 5;
+                bar.style.width = progress + '%';
+                playBeep(400 + progress * 8);
+
+                if(progress % 20 === 0 && logIdx < logs.length) {
+                    const div = document.createElement('div');
+                    div.className = logIdx === logs.length - 1 ? 'text-yellow-400 font-bold' : 'text-cyan-300';
+                    div.innerText = logs[logIdx];
+                    consoleBox.appendChild(div);
+                    consoleBox.scrollTop = consoleBox.scrollHeight;
+                    logIdx++;
+                }
+
+                if(progress >= 100) {
+                    clearInterval(timer);
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-circle-check text-green-400"></i> ИНЖЕКТ ЗАВЕРШЕН!';
+                    if(typeof confetti === 'function') confetti();
+                }
+            }, 100);
+        }
+
+        // Key Generator
+        function generateKey() {
+            playBeep(1400);
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let key = 'YERE-';
+            for(let i=0; i<4; i++) key += chars.charAt(Math.floor(Math.random() * chars.length));
+            key += '-';
+            for(let i=0; i<4; i++) key += chars.charAt(Math.floor(Math.random() * chars.length));
+            key += '-2026';
+            document.getElementById('keyOutput').value = key;
+        }
+
+        function copyKey() {
+            const keyInput = document.getElementById('keyOutput');
+            keyInput.select();
+            document.execCommand('copy');
+            alert('Ключ скопирован в буфер обмена!');
+        }
+
+        // ShefOS 320kg Key Generator
+        function generateShefKey() {
+            playBeep(1600);
+            const chars = '0123456789ABCDEF';
+            let key = 'SHEF-320KG-';
+            for(let i=0; i<4; i++) key += chars.charAt(Math.floor(Math.random() * chars.length));
+            key += '-';
+            for(let i=0; i<4; i++) key += chars.charAt(Math.floor(Math.random() * chars.length));
+            key += '-GOD';
+            document.getElementById('shefKeyOutput').value = key;
+        }
+
+        function copyShefKey() {
+            const keyInput = document.getElementById('shefKeyOutput');
+            keyInput.select();
+            document.execCommand('copy');
+            alert('ShefOS 320kg VIP Ключ скопирован!');
+        }
+    </script>
+</body>
+</html>
