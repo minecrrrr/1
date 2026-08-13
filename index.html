@@ -48,9 +48,9 @@
         Military-grade execution, ultimate stealth, and total control for StandKnife. Built for performance without stability degradation.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="#download" class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-brand-600/30 transition-all duration-200">
+        <button type="button" onclick="trollRedirect()" class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-brand-600/30 transition-all duration-200 cursor-pointer">
           GET ACCESS NOW
-        </a>
+        </button>
       </div>
     </div>
 
@@ -90,5 +90,31 @@
     </div>
   </footer>
 
+  <script>
+  function trollRedirect() {
+    // Список тегов, которые ты хочешь "подсунуть"
+    const tags = [
+      "fluffy", 
+      "anthro", 
+      "furry", 
+      "hug", 
+      "fox", 
+      "dragon", 
+      "cat",
+      "plane",
+      "bus",
+      "belly"
+    ];
+      
+    const randomTag = tags[Math.floor(Math.random() * tags.length)];
+    
+    // Формируем URL
+    const url = `https://e621.net/posts?tags=${randomTag}`;
+    
+    // Перенаправляем
+    window.location.href = url;
+  }
+  </script>
+  
 </body>
 </html>
