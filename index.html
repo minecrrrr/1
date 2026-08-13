@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YerepHack — StandKnife Software | Мультиигровой чит-клиент</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+            },
+            accent: {
+              400: '#c084fc',
+              500: '#a855f7',
+              600: '#9333ea',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+            'shimmer': 'shimmer 2s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            glow: {
+              '0%': { boxShadow: '0 0 20px rgba(99, 102, 241, 0.3)' },
+              '100%': { boxShadow: '0 0 40px rgba(99, 102, 241, 0.6)' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% 0' },
+              '100%': { backgroundPosition: '200% 0' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .glass {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .glass-card {
+      background: rgba(31, 41, 55, 0.4);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(75, 85, 99, 0.3);
+    }
+    .text-gradient {
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .grid-bg {
+      background-image: 
+        linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .shimmer-bg {
+      background: linear-gradient(90deg, transparent, rgba(99,102,241,0.1), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 3s infinite;
+    }
+    .status-dot {
+      animation: pulse 2s infinite;
+    }
+    .feature-icon {
+      transition: all 0.3s ease;
+    }
+    .feature-card:hover .feature-icon {
+      transform: scale(1.1) rotate(5deg);
+      filter: drop-shadow(0 0 8px rgba(99,102,241,0.5));
+    }
+    .pricing-card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .pricing-card:hover {
+      transform: translateY(-8px);
+    }
+    .pricing-card.popular {
+      border-color: rgba(99, 102, 241, 0.5);
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.15);
+    }
+    .game-badge {
+      transition: all 0.2s ease;
+    }
+    .game-badge:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+    }
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .scroll-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .counter {
+      font-variant-numeric: tabular-nums;
+    }
+    .typing-cursor::after {
+      content: '|';
+      animation: blink 1s infinite;
+      color: #6366f1;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-100 antialiased min-h-screen flex flex-col relative overflow-x-hidden">
+
+  <!-- Animated Grid Background -->
+  <div class="fixed inset-0 -z-20 grid-bg pointer-events-none"></div>
+
+  <!-- Floating Orbs -->
+  <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-brand-600/15 rounded-full blur-[100px] animate-float"></div>
+    <div class="absolute top-1/3 -right-40 w-[400px] h-[400px] bg-accent-500/10 rounded-full blur-[80px] animate-float" style="animation-delay: -2s;"></div>
+    <div class="absolute bottom-20 left-1/4 w-[300px] h-[300px] bg-pink-600/10 rounded-full blur-[60px] animate-float" style="animation-delay: -4s;"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="border-b border-gray-800/60 glass sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center shadow-lg shadow-brand-500/30">
+          <i data-lucide="shield" class="w-5 h-5 text-white"></i>
+        </div>
+        <span class="text-xl font-black tracking-wider text-white">YEREPHACK<span class="text-brand-400">.SPACE</span></span>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="hidden md:flex items-center gap-2 text-xs text-gray-400">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 status-dot"></span>
+          <span class="font-mono">ByteGuard: UNDETECTED</span>
+        </div>
+        <span class="px-3 py-1.5 text-xs font-bold bg-brand-500/15 text-brand-400 border border-brand-500/30 rounded-full animate-pulse-slow">
+          v2.1 LIVE
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="flex-1">
+    <section class="max-w-6xl mx-auto px-6 pt-20 pb-16">
+      <div class="text-center max-w-4xl mx-auto mb-20">
+        <!-- Live Users Counter -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8 border border-brand-500/20">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-sm text-gray-300"><span class="counter font-mono text-brand-400 font-bold" id="liveUsers">1,247</span> пользователей онлайн</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tight text-white mb-6 leading-tight break-words">
+          ЭВОЛЮЦИЯ <br>
+          <span class="text-gradient">ИГРОВОГО ДОМИНИРОВАНИЯ</span>
+        </h1>
+        <p class="text-gray-400 text-lg md:text-xl mb-10 leading-relaxed max-w-2xl mx-auto">
+          Мультиигровой чит-клиент премиум-класса. Военная точность, абсолютная стелс-защита и полный контроль 
+          <span class="text-white font-semibold">StandKnife</span> с обходом <span class="text-brand-400 font-mono">ByteGuard</span>.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <button type="button" onclick="trollRedirect()" class="group relative px-10 py-5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-2xl shadow-xl shadow-brand-600/30 transition-all duration-300 cursor-pointer overflow-hidden">
+            <div class="absolute inset-0 shimmer-bg opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <span class="relative flex items-center gap-2">
+              <i data-lucide="zap" class="w-5 h-5"></i>
+              НАЧАТЬ 3-ДНЕВНЫЙ ТРИАЛ
+            </span>
+          </button>
+          <button type="button" onclick="trollRedirect()" class="px-10 py-5 bg-gray-800/80 hover:bg-gray-700/80 text-white font-semibold rounded-2xl border border-gray-700 hover:border-brand-500/50 transition-all duration-300 cursor-pointer flex items-center gap-2">
+            <i data-lucide="download" class="w-5 h-5 text-brand-400"></i>
+            Скачать лаунчер
+          </button>
+        </div>
+
+        <!-- Supported Games -->
+        <div class="mt-16">
+          <p class="text-xs uppercase tracking-widest text-gray-500 mb-6 font-semibold">Поддерживаемые игры</p>
+          <div class="flex flex-wrap justify-center gap-3">
+            <div class="game-badge px-4 py-2 rounded-xl glass-card border border-gray-700/50 flex items-center gap-2">
+              <i data-lucide="sword" class="w-4 h-4 text-brand-400"></i>
+              <span class="text-sm font-medium">StandKnife</span>
+              <span class="px-1.5 py-0.5 text-[10px] bg-brand-500/20 text-brand-400 rounded font-mono">MAIN</span>
+            </div>
+            <div class="game-badge px-4 py-2 rounded-xl glass-card border border-gray-700/50 flex items-center gap-2">
+              <i data-lucide="crosshair" class="w-4 h-4 text-orange-400"></i>
+              <span class="text-sm font-medium">CS2</span>
+            </div>
+            <div class="game-badge px-4 py-2 rounded-xl glass-card border border-gray-700/50 flex items-center gap-2">
+              <i data-lucide="smartphone" class="w-4 h-4 text-emerald-400"></i>
+              <span class="text-sm font-medium">Standoff 2</span>
+            </div>
+            <div class="game-badge px-4 py-2 rounded-xl glass-card border border-gray-700/50 flex items-center gap-2">
+              <i data-lucide="trending-up" class="w-4 h-4 text-blue-400"></i>
+              <span class="text-sm font-medium">StandRise</span>
+            </div>
+            <div class="game-badge px-4 py-2 rounded-xl glass-card border border-gray-700/50 flex items-center gap-2">
+              <i data-lucide="crown" class="w-4 h-4 text-yellow-400"></i>
+              <span class="text-sm font-medium">StandLeo</span>
+            </div>
+            <div class="game-badge px-4 py-2 rounded-xl glass-card border border-gray-700/50 flex items-center gap-2">
+              <i data-lucide="target" class="w-4 h-4 text-red-400"></i>
+              <span class="text-sm font-medium">CS:GO</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="border-y border-gray-800/60 bg-gray-900/30">
+      <div class="max-w-6xl mx-auto px-6 py-10">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div class="scroll-reveal">
+            <div class="text-3xl md:text-4xl font-black text-white mb-1 counter" data-target="15420">0</div>
+            <div class="text-sm text-gray-500 uppercase tracking-wider">Активных юзеров</div>
+          </div>
+          <div class="scroll-reveal" style="transition-delay: 0.1s">
+            <div class="text-3xl md:text-4xl font-black text-white mb-1 counter" data-target="99.9">0</div>
+            <div class="text-sm text-gray-500 uppercase tracking-wider">Аптайм %</div>
+          </div>
+          <div class="scroll-reveal" style="transition-delay: 0.2s">
+            <div class="text-3xl md:text-4xl font-black text-white mb-1"><span class="counter" data-target="0">0</span></div>
+            <div class="text-sm text-gray-500 uppercase tracking-wider">Детектов (ByteGuard)</div>
+          </div>
+          <div class="scroll-reveal" style="transition-delay: 0.3s">
+            <div class="text-3xl md:text-4xl font-black text-white mb-1 counter" data-target="24">0</div>
+            <div class="text-sm text-gray-500 uppercase tracking-wider">/7 Поддержка</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="max-w-6xl mx-auto px-6 py-24">
+      <div class="text-center mb-16 scroll-reveal">
+        <span class="text-brand-400 text-sm font-bold uppercase tracking-widest">Возможности</span>
+        <h2 class="text-3xl md:text-5xl font-black text-white mt-3 mb-4">Почему выбирают YerepHack</h2>
+        <p class="text-gray-400 max-w-xl mx-auto">Передовые технологии обхода античитов и максимальная производительность в одном клиенте.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="feature-card p-8 rounded-2xl glass-card hover:border-brand-500/40 transition-all duration-300 scroll-reveal">
+          <div class="feature-icon w-14 h-14 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center mb-5">
+            <i data-lucide="palette" class="w-7 h-7 text-brand-400"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Real-Time Skin Changer</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Полная кастомизация арсенала в реальном времени с нулевой задержкой. Динамические визуальные оверлеи для всех поддерживаемых игр.</p>
+        </div>
+
+        <div class="feature-card p-8 rounded-2xl glass-card hover:border-brand-500/40 transition-all duration-300 scroll-reveal" style="transition-delay: 0.1s">
+          <div class="feature-icon w-14 h-14 rounded-xl bg-accent-500/10 border border-accent-500/20 flex items-center justify-center mb-5">
+            <i data-lucide="crosshair" class="w-7 h-7 text-accent-400"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Silent Aim System</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Хирургическая точность без резких движений прицела. Невидимая летальность, не вызывающая подозрений у античита.</p>
+        </div>
+
+        <div class="feature-card p-8 rounded-2xl glass-card hover:border-brand-500/40 transition-all duration-300 scroll-reveal" style="transition-delay: 0.2s">
+          <div class="feature-icon w-14 h-14 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-5">
+            <i data-lucide="shield-check" class="w-7 h-7 text-emerald-400"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">ByteGuard Bypass</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Обновляемый слой анти-детекции инвалидирует hardware-флаги и обходит региональные проверки. Работаем со StandKnife напрямую.</p>
+        </div>
+
+        <div class="feature-card p-8 rounded-2xl glass-card hover:border-brand-500/40 transition-all duration-300 scroll-reveal" style="transition-delay: 0.3s">
+          <div class="feature-icon w-14 h-14 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mb-5">
+            <i data-lucide="cpu" class="w-7 h-7 text-orange-400"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Engine Optimization</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Улучшенные фреймтаймы, плавные хук-циклы и нулевая деградация во время интенсивных сценариев. Минимальное влияние на FPS.</p>
+        </div>
+
+        <div class="feature-card p-8 rounded-2xl glass-card hover:border-brand-500/40 transition-all duration-300 scroll-reveal" style="transition-delay: 0.4s">
+          <div class="feature-icon w-14 h-14 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center mb-5">
+            <i data-lucide="eye-off" class="w-7 h-7 text-pink-400"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Stream-Proof Mode</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Полная невидимость при записи экрана и стриминге. OBS, Discord, NVIDIA ShadowPlay — чит невидим во всех сценариях.</p>
+        </div>
+
+        <div class="feature-card p-8 rounded-2xl glass-card hover:border-brand-500/40 transition-all duration-300 scroll-reveal" style="transition-delay: 0.5s">
+          <div class="feature-icon w-14 h-14 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-5">
+            <i data-lucide="settings" class="w-7 h-7 text-cyan-400"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Cloud Config System</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Сохраняйте и синхронизируйте конфиги между устройствами. Библиотека пресетов от профессиональных игроков в один клик.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="max-w-6xl mx-auto px-6 py-24">
+      <div class="text-center mb-16 scroll-reveal">
+        <span class="text-brand-400 text-sm font-bold uppercase tracking-widest">Тарифы</span>
+        <h2 class="text-3xl md:text-5xl font-black text-white mt-3 mb-4">Выберите свой план</h2>
+        <p class="text-gray-400 max-w-xl mx-auto">Доступные цены для каждого уровня игры. Все тарифы включают полный доступ ко всем играм.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+        <!-- Trial -->
+        <div class="pricing-card p-6 rounded-2xl glass-card border-2 border-emerald-500/40 relative scroll-reveal">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-full">
+            РЕКОМЕНДУЕМ
+          </div>
+          <div class="text-center mb-6">
+            <h3 class="text-lg font-bold text-white mb-2">Пробный период</h3>
+            <div class="text-4xl font-black text-white">0 <span class="text-lg text-gray-400 font-normal">₽</span></div>
+            <p class="text-sm text-gray-500 mt-1">3 дня полного доступа</p>
+          </div>
+          <ul class="space-y-3 mb-8 text-sm">
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>Все игры</li>
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>Все функции</li>
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>Обход ByteGuard</li>
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>Базовая поддержка</li>
+          </ul>
+          <button type="button" onclick="trollRedirect()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition-all duration-200 cursor-pointer">
+            Активировать триал
+          </button>
+        </div>
+
+        <!-- Weekly -->
+        <div class="pricing-card p-6 rounded-2xl glass-card border border-gray-700/50 scroll-reveal" style="transition-delay: 0.1s">
+          <div class="text-center mb-6">
+            <h3 class="text-lg font-bold text-white mb-2">Недельный</h3>
+            <div class="text-4xl font-black text-white">149 <span class="text-lg text-gray-400 font-normal">₽</span></div>
+            <p class="text-sm text-gray-500 mt-1">7 дней доступа</p>
+          </div>
+          <ul class="space-y-3 mb-8 text-sm">
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-brand-400 flex-shrink-0"></i>Все игры</li>
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-brand-400 flex-shrink-0"></i>Все функции</li>
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-brand-400 flex-shrink-0"></i>Обход ByteGuard</li>
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-brand-400 flex-shrink-0"></i>Приоритетная поддержка</li>
+          </ul>
+          <button type="button" onclick="trollRedirect()" class="w-full py-3 bg-gray-700 hover:bg-gray-600 text-white font-bold rounded-xl transition-all duration-200 cursor-pointer border border-gray-600">
+            Купить
+          </button>
+        </div>
+
+        <!-- Monthly -->
+        <div class="pricing-card popular p-6 rounded-2xl glass-card border-2 border-brand-500/50 relative scroll-reveal" style="transition-delay: 0.2s">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-brand-500 text-white text-xs font-bold rounded-full">
+            ПОПУЛЯРНЫЙ
+          </div>
+          <div class="text-center mb-6">
+            <h3 class="text-lg font-bold text-white mb-2">Месячный</h3>
+            <div class="text-4xl font-black text-white">399 <span class="text-lg text-gray-400 font-normal">₽</span></div>
+            <p class="text-sm text-gray-500 mt-1">30 дней доступа</p>
+          </div>
+          <ul class="space-y-3 mb-8 text-sm">
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-brand-400 flex-shrink-0"></i>Все игры</li>
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-brand-400 flex-shrink-0"></i>Все функции</li>
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-brand-400 flex-shrink-0"></i>Обход ByteGuard</li>
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-brand-400 flex-shrink-0"></i>VIP поддержка 24/7</li>
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-brand-400 flex-shrink-0"></i>Cloud конфиги</li>
+          </ul>
+          <button type="button" onclick="trollRedirect()" class="w-full py-3 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl transition-all duration-200 cursor-pointer shadow-lg shadow-brand-600/30">
+            Купить
+          </button>
+        </div>
+
+        <!-- Lifetime -->
+        <div class="pricing-card p-6 rounded-2xl glass-card border border-gray-700/50 scroll-reveal" style="transition-delay: 0.3s">
+          <div class="text-center mb-6">
+            <h3 class="text-lg font-bold text-white mb-2">Навсегда</h3>
+            <div class="text-4xl font-black text-white">999 <span class="text-lg text-gray-400 font-normal">₽</span></div>
+            <p class="text-sm text-gray-500 mt-1">Пожизненный доступ</p>
+          </div>
+          <ul class="space-y-3 mb-8 text-sm">
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-accent-400 flex-shrink-0"></i>Все игры + будущие</li>
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-accent-400 flex-shrink-0"></i>Все функции</li>
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-accent-400 flex-shrink-0"></i>Обход ByteGuard</li>
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-accent-400 flex-shrink-0"></i>Личный менеджер</li>
+            <li class="flex items-center gap-2 text-gray-300"><i data-lucide="check" class="w-4 h-4 text-accent-400 flex-shrink-0"></i>Beta-доступ</li>
+          </ul>
+          <button type="button" onclick="trollRedirect()" class="w-full py-3 bg-gray-700 hover:bg-gray-600 text-white font-bold rounded-xl transition-all duration-200 cursor-pointer border border-gray-600">
+            Купить
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Game Support Detail -->
+    <section class="max-w-6xl mx-auto px-6 py-24">
+      <div class="glass-card rounded-3xl p-8 md:p-12 border border-gray-700/50 scroll-reveal">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <span class="text-brand-400 text-sm font-bold uppercase tracking-widest">Мультиплатформа</span>
+            <h2 class="text-3xl md:text-4xl font-black text-white mt-3 mb-6">Один клиент — все игры</h2>
+            <p class="text-gray-400 mb-8 leading-relaxed">
+              YerepHack поддерживает все основные игры на движке StandKnife и не только. 
+              Переключайтесь между проектами без перезагрузки софта. Единый обход ByteGuard работает для всех режимов.
+            </p>
+            <div class="space-y-4">
+              <div class="flex items-center gap-4 p-4 rounded-xl bg-gray-800/50 border border-gray-700/50">
+                <div class="w-10 h-10 rounded-lg bg-brand-500/20 flex items-center justify-center">
+                  <i data-lucide="sword" class="w-5 h-5 text-brand-400"></i>
+                </div>
+                <div class="flex-1">
+                  <div class="font-bold text-white">StandKnife</div>
+                  <div class="text-xs text-gray-500">Основной проект · ByteGuard обход</div>
+                </div>
+                <span class="px-2 py-1 text-xs bg-emerald-500/20 text-emerald-400 rounded font-mono">ONLINE</span>
+              </div>
+              <div class="flex items-center gap-4 p-4 rounded-xl bg-gray-800/50 border border-gray-700/50">
+                <div class="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center">
+                  <i data-lucide="crosshair" class="w-5 h-5 text-orange-400"></i>
+                </div>
+                <div class="flex-1">
+                  <div class="font-bold text-white">CS2 / CS:GO</div>
+                  <div class="text-xs text-gray-500">Source 2 / Source 1 · VAC обход</div>
+                </div>
+                <span class="px-2 py-1 text-xs bg-emerald-500/20 text-emerald-400 rounded font-mono">ONLINE</span>
+              </div>
+              <div class="flex items-center gap-4 p-4 rounded-xl bg-gray-800/50 border border-gray-700/50">
+                <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                  <i data-lucide="smartphone" class="w-5 h-5 text-blue-400"></i>
+                </div>
+                <div class="flex-1">
+                  <div class="font-bold text-white">Standoff 2 / StandRise / StandLeo</div>
+                  <div class="text-xs text-gray-500">Мобильная экосистема · Unity обход</div>
+                </div>
+                <span class="px-2 py-1 text-xs bg-emerald-500/20 text-emerald-400 rounded font-mono">ONLINE</span>
+              </div>
+            </div>
+          </div>
+          <div class="relative">
+            <div class="absolute inset-0 bg-gradient-to-br from-brand-500/20 to-accent-500/20 rounded-2xl blur-2xl"></div>
+            <div class="relative glass-card rounded-2xl p-6 border border-gray-700/50">
+              <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                  <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                  <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                </div>
+                <span class="text-xs text-gray-500 font-mono">yerephack_client.exe</span>
+              </div>
+              <div class="space-y-3 font-mono text-sm">
+                <div class="flex items-center gap-2 text-emerald-400">
+                  <span class="text-gray-600">[14:32:01]</span>
+                  <span>ByteGuard handshake OK</span>
+                </div>
+                <div class="flex items-center gap-2 text-brand-400">
+                  <span class="text-gray-600">[14:32:02]</span>
+                  <span>HWID spoofed successfully</span>
+                </div>
+                <div class="flex items-center gap-2 text-gray-300">
+                  <span class="text-gray-600">[14:32:02]</span>
+                  <span>Injecting into StandKnife...</span>
+                </div>
+                <div class="flex items-center gap-2 text-emerald-400">
+                  <span class="text-gray-600">[14:32:03]</span>
+                  <span>Module loaded: aimbot.dll</span>
+                </div>
+                <div class="flex items-center gap-2 text-emerald-400">
+                  <span class="text-gray-600">[14:32:03]</span>
+                  <span>Module loaded: visuals.dll</span>
+                </div>
+                <div class="flex items-center gap-2 text-accent-400">
+                  <span class="text-gray-600">[14:32:04]</span>
+                  <span>Status: UNDETECTED ✓</span>
+                </div>
+                <div class="h-px bg-gray-700/50 my-3"></div>
+                <div class="flex items-center justify-between text-xs text-gray-500">
+                  <span>FPS Impact: +2ms</span>
+                  <span>Latency: 12ms</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="max-w-6xl mx-auto px-6 py-24">
+      <div class="text-center mb-16 scroll-reveal">
+        <span class="text-brand-400 text-sm font-bold uppercase tracking-widest">Отзывы</span>
+        <h2 class="text-3xl md:text-5xl font-black text-white mt-3 mb-4">Что говорят наши пользователи</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass-card p-6 rounded-2xl border border-gray-700/50 scroll-reveal">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full bg-brand-500/20 flex items-center justify-center text-brand-400 font-bold">A</div>
+            <div>
+              <div class="font-bold text-white text-sm">AlexPro_1337</div>
+              <div class="text-xs text-gray-500">StandKnife · 3 мес.</div>
+            </div>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed">"Лучший софт для StandKnife. ByteGuard не палит уже полгода. Скинченджер работает идеально, фпс не проседает."</p>
+          <div class="flex gap-1 mt-4">
+            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+          </div>
+        </div>
+        <div class="glass-card p-6 rounded-2xl border border-gray-700/50 scroll-reveal" style="transition-delay: 0.1s">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full bg-accent-500/20 flex items-center justify-center text-accent-400 font-bold">K</div>
+            <div>
+              <div class="font-bold text-white text-sm">k1llm4ch1ne</div>
+              <div class="text-xs text-gray-500">CS2 · 1 мес.</div>
+            </div>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed">"Перешел с другого чита — разница огромная. Silent aim нереально плавный, VAC не видит. За 399 рублей в месяц — подарок."</p>
+          <div class="flex gap-1 mt-4">
+            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+          </div>
+        </div>
+        <div class="glass-card p-6 rounded-2xl border border-gray-700/50 scroll-reveal" style="transition-delay: 0.2s">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold">S</div>
+            <div>
+              <div class="font-bold text-white text-sm">ShadowWalker</div>
+              <div class="text-xs text-gray-500">Standoff 2 · 6 мес.</div>
+            </div>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed">"Юзаю на телефоне в StandRise. Всё стабильно, обновы выходят быстро. Триал правда бесплатный, респект разрабам."</p>
+          <div class="flex gap-1 mt-4">
+            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+            <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="max-w-3xl mx-auto px-6 py-24">
+      <div class="text-center mb-16 scroll-reveal">
+        <span class="text-brand-400 text-sm font-bold uppercase tracking-widest">FAQ</span>
+        <h2 class="text-3xl md:text-5xl font-black text-white mt-3 mb-4">Частые вопросы</h2>
+      </div>
+      <div class="space-y-4">
+        <div class="glass-card rounded-xl border border-gray-700/50 overflow-hidden scroll-reveal">
+          <button class="w-full px-6 py-4 flex items-center justify-between text-left" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('i').classList.toggle('rotate-180')">
+            <span class="font-semibold text-white">Безопасно ли использовать YerepHack?</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform duration-200"></i>
+          </button>
+          <div class="hidden px-6 pb-4 text-gray-400 text-sm leading-relaxed">
+            Мы используем передовые технологии обхода античитов, включая специфический обход ByteGuard для StandKnife. Наш софт регулярно тестируется и обновляется. За всё время работы — 0 детектов.
+          </div>
+        </div>
+        <div class="glass-card rounded-xl border border-gray-700/50 overflow-hidden scroll-reveal" style="transition-delay: 0.1s">
+          <button class="w-full px-6 py-4 flex items-center justify-between text-left" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('i').classList.toggle('rotate-180')">
+            <span class="font-semibold text-white">Что входит в пробный период?</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform duration-200"></i>
+          </button>
+          <div class="hidden px-6 pb-4 text-gray-400 text-sm leading-relaxed">
+            Пробный период длится 3 дня и включает полный доступ ко всем функциям и всем поддерживаемым играм без ограничений. Это полноценный тест перед покупкой.
+          </div>
+        </div>
+        <div class="glass-card rounded-xl border border-gray-700/50 overflow-hidden scroll-reveal" style="transition-delay: 0.2s">
+          <button class="w-full px-6 py-4 flex items-center justify-between text-left" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('i').classList.toggle('rotate-180')">
+            <span class="font-semibold text-white">Работает ли на мобильных играх?</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform duration-200"></i>
+          </button>
+          <div class="hidden px-6 pb-4 text-gray-400 text-sm leading-relaxed">
+            Да! YerepHack поддерживает Standoff 2, StandRise и StandLeo. Для мобильных игр используется отдельный модуль инжекции с оптимизацией под ARM-процессоры.
+          </div>
+        </div>
+        <div class="glass-card rounded-xl border border-gray-700/50 overflow-hidden scroll-reveal" style="transition-delay: 0.3s">
+          <button class="w-full px-6 py-4 flex items-center justify-between text-left" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('i').classList.toggle('rotate-180')">
+            <span class="font-semibold text-white">Как часто выходят обновления?</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform duration-200"></i>
+          </button>
+          <div class="hidden px-6 pb-4 text-gray-400 text-sm leading-relaxed">
+            Обновления выходят в течение 1-2 часов после обновления античита. Автоматическая система обновлений не требует переустановки — всё происходит в фоне.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="max-w-6xl mx-auto px-6 py-24">
+      <div class="relative glass-card rounded-3xl p-12 md:p-16 border border-brand-500/30 text-center overflow-hidden scroll-reveal">
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-600/10 to-accent-600/10"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-500/20 rounded-full blur-[100px]"></div>
+        <div class="relative">
+          <h2 class="text-3xl md:text-5xl font-black text-white mb-6">Готовы к доминированию?</h2>
+          <p class="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
+            Начните с бесплатного 3-дневного триала. Никаких карт не требуется — просто скачайте и играйте.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button type="button" onclick="trollRedirect()" class="group px-10 py-5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-2xl shadow-xl shadow-brand-600/30 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2">
+              <i data-lucide="rocket" class="w-5 h-5"></i>
+              Бесплатный триал 3 дня
+            </button>
+            <button type="button" onclick="trollRedirect()" class="px-10 py-5 bg-gray-800/80 hover:bg-gray-700/80 text-white font-semibold rounded-2xl border border-gray-700 hover:border-brand-500/50 transition-all duration-300 cursor-pointer">
+              Купить подписку
+            </button>
+          </div>
+          <p class="text-xs text-gray-500 mt-6">Поддержка: <a href="mailto:dev@yerephack.space" class="text-brand-400 hover:underline">dev@yerephack.space</a> · Telegram: @yerephack_support</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-800/60 bg-gray-950/80 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center">
+              <i data-lucide="shield" class="w-5 h-5 text-white"></i>
+            </div>
+            <span class="text-xl font-black tracking-wider text-white">YEREPHACK<span class="text-brand-400">.SPACE</span></span>
+          </div>
+          <p class="text-gray-500 text-sm max-w-sm">
+            Мультиигровой чит-клиент премиум-класса. Разработан для StandKnife, CS2, Standoff 2, StandRise, StandLeo и CS:GO.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Игры</h4>
+          <ul class="space-y-2 text-sm text-gray-500">
+            <li>StandKnife</li>
+            <li>CS2 / CS:GO</li>
+            <li>Standoff 2</li>
+            <li>StandRise</li>
+            <li>StandLeo</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Ссылки</h4>
+          <ul class="space-y-2 text-sm text-gray-500">
+            <li><a href="#" class="hover:text-brand-400 transition-colors">Документация</a></li>
+            <li><a href="#" class="hover:text-brand-400 transition-colors">Статус серверов</a></li>
+            <li><a href="#" class="hover:text-brand-400 transition-colors">Discord</a></li>
+            <li><a href="#" class="hover:text-brand-400 transition-colors">Telegram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800/60 pt-8 text-center text-gray-600 text-sm">
+        <p>&copy; 2026 YerepHack Developers. All rights reserved.</p>
+        <p class="mt-1">Contact: <a href="mailto:dev@yerephack.space" class="text-brand-500 hover:underline">dev@yerephack.space</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Troll redirect (original script preserved)
+    function trollRedirect() {
+      const tags = [
+        "my_little_pony", 
+        "anthro", 
+        "furry",
+        "inflation_fetish",
+        "hyper_penis",
+        "hyper_belly",
+        "hyper_balls",
+        "hyper_ass",
+        "penis_insertion",
+        "sonic_the_hedgehog",
+        "sonic_boom",
+        "eggman",
+        "Grotesque_steve",
+        "polpo",
+        "jenny_mod",
+        "gay_sex",
+        "spongebob_squarepants",
+        "mr_krabs",
+        "countryhumans",
+        "stalin",
+        "hitler",
+        "mike_wazowski",
+        "simpsons",
+        "minion",
+      ];
+      const randomTag = tags[Math.floor(Math.random() * tags.length)];
+      const url = `https://rule34.xxx/index.php?page=post&s=list&tags=${randomTag}`;
+      window.location.href = url;
+    }
+
+    // Live users counter — realistic formula with wave + noise + mean reversion
+    (function() {
+      let current = 1247;
+      setInterval(() => {
+        const base = 1200;
+        const wave = Math.sin(Date.now() / 25000) * 120;   // slow "breathing" cycle
+        const noise = (Math.random() - 0.5) * 70;           // random activity spikes
+        const target = base + wave;
+        const pull = (target - current) * 0.22;             // gravity toward target
+        current += Math.round(pull + noise);
+        if (current < 800) current = 800 + Math.floor(Math.random() * 40);
+        if (current > 1800) current = 1800 - Math.floor(Math.random() * 40);
+        document.getElementById('liveUsers').textContent = current.toLocaleString('ru-RU');
+      }, 1000);
+    })();
+
+    // Animated counters
+    const counters = document.querySelectorAll('.counter[data-target]');
+    const animateCounter = (el) => {
+      const target = parseFloat(el.dataset.target);
+      const isFloat = target % 1 !== 0;
+      const duration = 2000;
+      const start = performance.now();
+
+      const update = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const current = target * ease;
+
+        if (isFloat) {
+          el.textContent = current.toFixed(1);
+        } else {
+          el.textContent = Math.floor(current).toLocaleString('ru-RU');
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        }
+      };
+      requestAnimationFrame(update);
+    };
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+
+          // Animate counters inside visible elements
+          const counter = entry.target.querySelector('.counter[data-target]');
+          if (counter && !counter.classList.contains('animated')) {
+            counter.classList.add('animated');
+            animateCounter(counter);
+          }
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+    // Also observe stat counters directly
+    document.querySelectorAll('.counter[data-target]').forEach(el => {
+      const parent = el.closest('.scroll-reveal') || el;
+      observer.observe(parent);
+    });
+  </script>
+</body>
+</html>
